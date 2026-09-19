@@ -5,7 +5,7 @@ abbr -a btm " btm --disable_click --process_memory_as_value --enable_cache_memor
 abbr -a c " cdh"
 abbr -a cd " cd"
 abbr -a cdd " cd ../"
-abbr -a d " dirh"
+abbr -a d " dejima"
 abbr -a fdu " du -hs (find . -maxdepth 1 -type d | fzf)"
 abbr -a fcd " fcd"
 abbr -a fdiff " fzf_git_diff"
@@ -19,17 +19,7 @@ abbr -a mermaid " fd -e md | fzf | xargs -I {} podman run --userns keep-id --use
 abbr -a marp " fd -e md | fzf | xargs -I {}  podman run --rm --init --mount type=bind,source=(pwd),target=/home/marp/app/ docker.io/marpteam/marp-cli {} --pdf"
 abbr -a n " nvim"
 abbr -a nn " nvim -c ':tabnew term://fish | stopinsert | tabmove 0 | tabnext'"
-abbr -a p " python"
 abbr -a tf " tail -f"
 abbr -a z " z"
 abbr -a zi " zi"
 
-# aichat aliases
-function aichat_tmp_session
-    set date (date '+%Y-%m-%d_%H-%M-%S')
-    set command (echo "aichat --session $date")
-    echo " $command"
-end
-
-abbr -a ai --function aichat_tmp_session
-abbr -a --set-cursor=! obsidian " aichat -r obsidian --session obsidian/summarize-!"
