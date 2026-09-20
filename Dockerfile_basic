@@ -40,6 +40,5 @@ RUN echo 'eval "$(/home/linuxbrew/.linuxbrew/bin/brew shellenv)"' >> ~/.bashrc
 
 # Copy nvim config files
 COPY --chown=linuxbrew:linuxbrew nvim /home/linuxbrew/.config/nvim
-COPY --chown=linuxbrew:linuxbrew pi /home/linuxbrew/.pi
 
 CMD ["/bin/bash"]

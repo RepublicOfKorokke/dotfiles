@@ -35,7 +35,7 @@ RUN echo 'eval "$(/home/linuxbrew/.linuxbrew/bin/brew shellenv)"' >> ~/.bashrc
 
 RUN npm install -g @mariozechner/pi-coding-agent
 
-# Copy nvim config files
+# Copy pi config files
 COPY --chown=linuxbrew:linuxbrew pi /home/linuxbrew/.pi
 
 CMD ["/bin/bash"]
