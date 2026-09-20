@@ -1,0 +1,32 @@
+default_model = "gemma-4-E4B-it-qat-q4_0-unquantized-oQ4e-text-fp16"
+hook_command = 'printf "\a" > /dev/tty; osascript -e "display notification \"Response ready — check Dejima\" with title \"Dejima\" sound name \"Glass\""'
+stream_fps = 15
+editor_command = "zed --wait"
+
+[keys]
+session_preview = ["space"]
+
+[agent]
+ask_hook_command = 'printf "\a" > /dev/tty; osascript -e "display notification \"Waiting for permission...\" with title \"Dejima\" sound name \"Glass\""'
+bash = "ask"
+read_file = "ask"
+write_file = "ask"
+edit_file = "ask"
+
+[agent.danger]
+commands = [
+  "rm",
+  "git reset",
+  "git push",
+  "git clean",
+  "git rm",
+  "sudo",
+  "dd",
+  "mkfs",
+  "format",
+  "sh",
+  "python",
+  "uv",
+  "perl",
+]
+paths = [".env", ".git", "~", "../"]

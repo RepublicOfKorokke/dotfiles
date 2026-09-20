@@ -1,0 +1,40 @@
+[[model]]
+name = "gemma-4-E4B-it-qat-q4_0-unquantized-oQ4e-text-fp16"
+friendly_name = "Gemma4 E4B"
+endpoint = "http://localhost:51234/v1/chat/completions"
+
+[[model]]
+name = "gemma-4-26B-A4B-it-qat-q4_0-unquantized-oQ4e-text-fp16"
+friendly_name = "Gemma4 26B-A4B"
+endpoint = "http://localhost:51234/v1/chat/completions"
+
+[[model]]
+name = "Qwen3.6-35B-A3B-oQ4e-fp16"
+friendly_name = "Qwen3.6 35B-A3B"
+endpoint = "http://localhost:51234/v1/chat/completions"
+
+[[model]]
+name = "Tiel-Coder-35B-A3B-MLX-oQ4e"
+friendly_name = "Tiel-Coder 35B-A3B"
+endpoint = "http://localhost:51234/v1/chat/completions"
+
+[[model]]
+name = "Cyber-Tiel-Coder-35B-A3B-MLX-oQ4e"
+friendly_name = "Cyver-Tiel-Coder 35B-A3B"
+endpoint = "http://localhost:51234/v1/chat/completions"
+
+# --- Cloud Models ---
+
+[[model]]
+name = "gemma-4-31b-it"
+friendly_name = "(Cloud) Gemma4 31B"
+endpoint = "https://generativelanguage.googleapis.com/v1beta"
+protocol = "gemini"
+api_key_env = "GEMINI_API_KEY"
+
+[[model]]
+name = "gemma-4-26b-a4b-it"
+friendly_name = "(Cloud) Gemma4 26B-A4B"
+endpoint = "https://generativelanguage.googleapis.com/v1beta"
+protocol = "gemini"
+api_key_env = "GEMINI_API_KEY"
