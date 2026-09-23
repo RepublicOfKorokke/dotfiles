@@ -8,13 +8,11 @@ return {
 		"andersevenrud/cmp-tmux",
 		{ "ray-x/cmp-treesitter", commit = "c8e3a74" },
 		"onsails/lspkind.nvim",
-		"rinx/cmp-skkeleton",
 	},
 	config = function()
 		local cmp = require("cmp")
 		cmp.setup({
 			sources = cmp.config.sources({
-				{ name = "skkeleton" },
 				{ name = "nvim_lsp", max_item_count = 350 },
 				{ name = "buffer" },
 				{ name = "path" },

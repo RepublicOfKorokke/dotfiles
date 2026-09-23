@@ -37,3 +37,17 @@ Session.vim
 fish/config-local.fish
 fish/fish_variables*
 fish/fish_variables
+fishd.*
+
+karabiner/automatic_backups
+
+/pi/agent/auth.json
+/pi/agent/sessions
+
+/dejima/sessions
+/dejima/prompts
+/dejima/dejima.log
+
+/zed/prompts/prompts-library-db.0.mdb
+
+/anthy
