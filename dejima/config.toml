@@ -1,7 +1,7 @@
 default_model = "gemma-4-E4B-it-qat-q4_0-unquantized-oQ4e-text-fp16"
 hook_command = 'printf "\a" > /dev/tty; osascript -e "display notification \"Response ready — check Dejima\" with title \"Dejima\" sound name \"Glass\""'
 stream_fps = 15
-editor_command = "zed --wait"
+# editor_command = "zed --wait"
 
 [keys]
 session_preview = ["space"]
