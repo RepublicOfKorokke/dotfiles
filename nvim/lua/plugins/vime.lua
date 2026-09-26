@@ -5,6 +5,10 @@ return {
 		require("vime").setup({
 			keymaps = {
 				cancel = "<C-c>",
+				next_segment = "<Tab>",
+				prev_segment = "<S-Tab>",
+				expand = "<C-l>",
+				shrink = "<C-h>",
 			},
 			mode_notify = {
 				enabled = true,
