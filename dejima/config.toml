@@ -9,7 +9,7 @@ session_preview = ["space"]
 [agent]
 ask_hook_command = 'printf "\a" > /dev/tty; osascript -e "display notification \"Waiting for permission...\" with title \"Dejima\" sound name \"Glass\""'
 bash = "ask"
-read_file = "ask"
+read_file = "auto"
 write_file = "ask"
 edit_file = "ask"
 
