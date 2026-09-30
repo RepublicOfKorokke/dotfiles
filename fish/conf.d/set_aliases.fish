@@ -24,3 +24,9 @@ abbr -a tf " tail -f"
 abbr -a z " z"
 abbr -a zi " zi"
 
+function __dl_abbr
+    set -l subpath (pwd)
+    echo "dejima --sessions ~/.config/dejima/sessions/locals/$subpath"
+end
+
+abbr -a dl --function __dl_abbr
