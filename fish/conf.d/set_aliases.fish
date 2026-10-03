@@ -20,6 +20,7 @@ abbr -a mermaid " fd -e md | fzf | xargs -I {} podman run --userns keep-id --use
 abbr -a marp " fd -e md | fzf | xargs -I {}  podman run --rm --init --mount type=bind,source=(pwd),target=/home/marp/app/ docker.io/marpteam/marp-cli {} --pdf"
 abbr -a n " nvim"
 abbr -a nn " nvim -c ':tabnew term://fish | stopinsert | tabmove 0 | tabnext'"
+abbr -a rip " rip -i --graveyard $HOME/Desktop/.trash"
 abbr -a tf " tail -f"
 abbr -a z " z"
 abbr -a zi " zi"
