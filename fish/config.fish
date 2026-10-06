@@ -10,3 +10,7 @@ podman completion fish | source
 bind \cr 'fzf_command_history'
 bind \cq 'fzf_select_file'
 bind \ct 'fzf_fd_file'
+
+# bun
+set --export BUN_INSTALL "$HOME/.bun"
+set --export PATH $BUN_INSTALL/bin $PATH
