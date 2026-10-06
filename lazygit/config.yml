@@ -1,8 +1,8 @@
 git:
-  pagers:
+  diffRenderers:
     - colorArg: always
       # useConfig: true
-      pager: delta --dark --paging=never --line-numbers
+      command: delta --dark --paging=never --line-numbers
   autoFetch: false
 gui:
   mouseEvents: false
