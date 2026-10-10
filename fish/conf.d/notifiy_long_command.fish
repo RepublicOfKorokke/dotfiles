@@ -3,7 +3,7 @@ function notify_long_command --on-event fish_postexec
     test $duration -lt 3000; and return
 
     set -l cmd_base (string split --no-empty " " -- $argv[1])[1]
-    set -l exclude_list nvim vim vi man less top htop btop btm tail ssh bat lazygit pi opencode dejima glow
+    set -l exclude_list nvim vim vi man less top htop btop btm tail ssh bat lazygit pi opencode dejima leaf
     if contains $cmd_base $exclude_list
         return
     end

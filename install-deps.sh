@@ -31,7 +31,7 @@ packages=(
     gron
     vivid
     bottom
-    glow
+    leaf
 )
 
 for pkg in "${packages[@]}"; do

@@ -3,6 +3,7 @@ hook_command = 'printf "\a" > /dev/tty; osascript -e "display notification \"Res
 stream_fps = 15
 scroll_step = 20
 # editor_command = "zed --wait"
+preview_command = "leaf"
 
 [keys]
 session_preview = ["space"]
