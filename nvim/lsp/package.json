@@ -1,0 +1,16 @@
+{
+  "name": "nvim-lsp-tools",
+  "private": true,
+  "dependencies": {
+    // ts_ls  (LSP)       -> *.ts, *.tsx, *.js, *.jsx
+    "typescript-language-server": "6.0.2",
+    // yamlls (LSP)       -> *.yaml, *.yml
+    "yaml-language-server": "1.25.0",
+    // bashls (LSP)       -> *.sh, *.bash
+    "bash-language-server": "5.8.1",
+    // cssls / jsonls / html (LSP) -> *.css, *.json, *.html
+    "vscode-langservers-extracted": "4.10.0",
+    // prettier (Formatter) -> css / html / javascript / json / markdown / typescript (conform から bun 経由で実行)
+    "prettier": "3.9.10"
+  }
+}
