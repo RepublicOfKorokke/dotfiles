@@ -4,8 +4,8 @@ return {
 	config = function()
 		require("notify").setup({
 			background_colour = "#000000",
-			timeout = 3000,
-			fps = 120,
+			timeout = 1500,
+			fps = 60,
 			stages = "slide",
 			top_down = false,
 		})

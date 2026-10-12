@@ -70,7 +70,7 @@ return {
 
 	config = function(_, opts)
 		local conform = require("conform")
-		vim.notify("Formatter loaded")
+		-- vim.notify("Formatter loaded")
 
 		vim.api.nvim_create_autocmd("BufWritePre", {
 			pattern = "*",
