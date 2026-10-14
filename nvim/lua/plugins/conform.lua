@@ -75,9 +75,6 @@ return {
 		vim.api.nvim_create_autocmd("BufWritePre", {
 			pattern = "*",
 			callback = function(args)
-				if vim.bo[args.buf].filetype == "markdown" then
-					return
-				end
 				M.do_format(args.buf)
 			end,
 		})
