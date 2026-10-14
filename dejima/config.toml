@@ -1,4 +1,4 @@
-default_model = "gemma-4-E4B-it-qat-q4_0-unquantized-oQ4e-text-fp16"
+default_model = "gemma-4-E4B-it-qat-q4_0-unquantized-oQ4e-text-fp16-0.7.1.dev1"
 hook_command = 'printf "\a" > /dev/tty; osascript -e "display notification \"Response ready — check Dejima\" with title \"Dejima\" sound name \"Glass\""'
 stream_fps = 15
 scroll_step = 20
@@ -30,5 +30,6 @@ commands = [
   "python",
   "uv",
   "perl",
+  "ruby",
 ]
 paths = [".env", ".git", "~", "../"]
