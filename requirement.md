@@ -4,19 +4,10 @@
 
 https://github.com/sharkdp/vivid
 
-### On Debian-based systems
-
-Download one of the Debian packages from the [release page](https://github.com/sharkdp/vivid/releases)
-and install it via `dpkg -i`:
-
 ```bash
 wget "https://github.com/sharkdp/vivid/releases/download/v0.8.0/vivid_0.8.0_amd64.deb"
 sudo dpkg -i vivid_0.8.0_amd64.deb
 ```
-
-### On macOS
-
-You can install `vivid` from [Homebrew](https://github.com/Homebrew/homebrew-core/blob/HEAD/Formula/vivid.rb):
 
 ```bash
 brew install vivid
@@ -39,16 +30,40 @@ sh autogen.sh
 make && sudo make install
 ```
 
-## ripgrep
+## nvim
 
 ### Debian-based
+
+```
+curl -LO https://github.com/neovim/neovim/releases/download/stable/nvim-linux64.tar.gz
+tar xzvf nvim-linux64.tar.gz
+mv nvim-linux64/ ~/bin/
+```
+
+```
+curl -LO https://github.com/neovim/neovim/releases/download/stable/nvim-macos.tar.gz
+xattr -c ./nvim-macos.tar.gz (to avoid "unknown developer" warning)
+tar xzvf nvim-macos.tar.gz
+mv nvim-macos/ ~/bin/
+```
+
+## bat
+
+```
+wget https://github.com/sharkdp/bat/releases/download/v0.23.0/bat_0.23.0_amd64.deb
+sudo dpkg -i bat_0.23.0_amd64.deb
+```
+
+```
+brew install bat
+```
+
+## ripgrep
 
 ```
 curl -LO https://github.com/BurntSushi/ripgrep/releases/download/13.0.0/ripgrep_13.0.0_amd64.deb
 sudo dpkg -i ripgrep_13.0.0_amd64.deb
 ```
-
-### macOS
 
 ```
 brew install ripgrep
@@ -56,15 +71,22 @@ brew install ripgrep
 
 ## fd
 
-### Debian-based
-
 ```
 curl -LO https://github.com/sharkdp/fd/releases/download/v8.7.0/fd_8.7.0_amd64.deb
 sudo dpkg -i fd_8.7.0_amd64.deb
 ```
 
-### macOS
-
 ```
 brew install fd
+```
+
+## nvim LSP / Formatter
+
+mason は使わず、ネイティブ系は Homebrew / uv / rustup、JS/TS 系は bun で管理する。
+詳細は [nvim/docs/lsp.md](nvim/docs/lsp.md) を参照。
+
+インストール:
+
+```
+nvim/scripts/install-lsp.sh
 ```
