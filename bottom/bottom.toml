@@ -1,0 +1,6 @@
+[flags]
+disable_click = true
+mem_as_value = true
+rate = 1500
+# dot_marker = true
+# enable_gpu_memory = true

@@ -1,0 +1,42 @@
+// Zed settings
+//
+// For information on how to configure Zed, see the Zed
+// documentation: https://zed.dev/docs/configuring-zed
+//
+// To see all of Zed's default settings without changing your
+// custom settings, run `zed: open default settings` from the
+// command palette (cmd-shift-p / ctrl-shift-p)
+{
+  "soft_wrap": "none",
+  "show_wrap_guides": true,
+  "on_last_window_closed": "platform_default",
+  "minimap": {
+    "display_in": "all_editors",
+    "show": "always"
+  },
+  "relative_line_numbers": "disabled",
+  "default_open_behavior": "existing_window",
+  "when_closing_with_no_tabs": "platform_default",
+  "base_keymap": "Zed",
+  "cli_default_open_behavior": "existing_window",
+  "auto_update": false,
+  "disable_ai": true,
+  "icon_theme": "Zed (Default)",
+  "telemetry": {
+    "diagnostics": false,
+    "metrics": false,
+    "anthropic_retention": false
+  },
+  "ui_font_size": 16,
+  "buffer_font_size": 15,
+  "theme": {
+    "mode": "dark",
+    "light": "Ayu Light",
+    "dark": "Gruvbox Dark",
+  },
+  "title_bar": {
+    "show_onboarding_banner": false,
+    "show_user_picture": false,
+    "show_sign_in": false
+  },
+}

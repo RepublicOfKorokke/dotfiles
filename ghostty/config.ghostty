@@ -3,6 +3,7 @@ keybind = super+c=copy_to_clipboard
 keybind = super+v=paste_from_clipboard
 
 font-size = 14
+font-family = "HackGen35 Console NFJ"
 
 background-opacity = 0.85
 background-blur-radius = 50
