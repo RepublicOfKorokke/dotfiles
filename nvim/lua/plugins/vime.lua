@@ -9,6 +9,8 @@ return {
 				prev_segment = "<S-Tab>",
 				expand = "<C-l>",
 				shrink = "<C-h>",
+				katakana = "<C-q>",
+				alphabet = "<C-a>",
 			},
 			mode_notify = {
 				enabled = true,
