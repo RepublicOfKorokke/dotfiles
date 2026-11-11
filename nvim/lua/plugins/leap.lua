@@ -7,36 +7,38 @@ return {
 	config = function()
 		vim.api.nvim_set_hl(0, "LeapBackdrop", { link = "Comment" })
 		require("leap.user").set_repeat_keys("<enter>", "<backspace>")
+		require("leap").opts.preview = false
 		do
-			-- Return an argument table for `leap()`, tailored for f/t-motions.
-			local function as_ft(key_specific_args)
-				local common_args = {
+			local function ft(kwargs)
+				require("leap").leap(vim.tbl_deep_extend("keep", kwargs, {
 					inputlen = 1,
 					inclusive = true,
-					-- To limit search scope to the current line:
-					-- pattern = function (pat) return '\\%.l'..pat end,
 					opts = {
-						labels = "", -- force autojump
-						safe_labels = vim.fn.mode(1):match("[no]") and "" or nil, -- [1]
+						-- Force autojump.
+						labels = "",
+						-- Match the modes where you don't need labels (`:h mode()`).
+						safe_labels = vim.fn.mode(1):match("no?") and "" or nil,
 					},
-				}
-				return vim.tbl_deep_extend("keep", common_args, key_specific_args)
+				}))
 			end
 
-			local clever = require("leap.user").with_traversal_keys -- [2]
-			local clever_f = clever("f", "F")
-			local clever_t = clever("t", "T")
+			-- A helper function making it easier to set "clever-f" behavior
+			-- (using f/F or t/T instead of ;/, - see the plugin clever-f.vim).
+			local clever = require("leap.user").with_traversal_keys
+			local clever_f, clever_t = clever("f", "F"), clever("t", "T")
 
-			for key, key_specific_args in pairs({
-				f = { opts = clever_f, desc = "Leap to next char" },
-				F = { backward = true, opts = clever_f, desc = "Leap to prev char" },
-				t = { offset = -1, opts = clever_t, desc = "Leap to before next char" },
-				T = { backward = true, offset = 1, opts = clever_t, desc = "Leap to after prev char" },
-			}) do
-				vim.keymap.set({ "n", "x", "o" }, key, function()
-					require("leap").leap(as_ft(key_specific_args))
-				end)
-			end
+			vim.keymap.set({ "n", "x", "o" }, "f", function()
+				ft({ opts = clever_f })
+			end)
+			vim.keymap.set({ "n", "x", "o" }, "F", function()
+				ft({ backward = true, opts = clever_f })
+			end)
+			vim.keymap.set({ "n", "x", "o" }, "t", function()
+				ft({ offset = -1, opts = clever_t })
+			end)
+			vim.keymap.set({ "n", "x", "o" }, "T", function()
+				ft({ backward = true, offset = 1, opts = clever_t })
+			end)
 		end
 	end,
 	dependencies = { "tpope/vim-repeat" },

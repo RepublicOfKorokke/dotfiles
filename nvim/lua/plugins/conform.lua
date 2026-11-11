@@ -1,8 +1,5 @@
 local M = {}
 
--- JS/TS 系ツール (prettier) は nvim/lsp の bun プロジェクト (lockfile 管理) の実体を bun で実行する。
-local lsp_bin = require("lsp_bin")
-
 --- Format the buffer and show which formatter is used.
 ---@param bufnr integer|nil  Buffer to act on (defaults to current)
 M.do_format = function(bufnr)
@@ -56,10 +53,9 @@ return {
 		},
 
 		formatters = {
-			-- prettier を bun 経由で実行 (node 不要)。args は conform 既定と同じ。
 			prettier = {
 				command = "bun",
-				args = { "--bun", lsp_bin .. "prettier", "--stdin-filepath", "$FILENAME" },
+				args = { "fmt", "--stdin-filepath", "$FILENAME" },
 			},
 		},
 

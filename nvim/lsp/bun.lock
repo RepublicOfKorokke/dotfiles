@@ -6,7 +6,6 @@
       "name": "nvim-lsp-tools",
       "dependencies": {
         "bash-language-server": "5.8.1",
-        "prettier": "3.9.10",
         "typescript-language-server": "6.0.2",
         "vscode-langservers-extracted": "4.10.0",
         "yaml-language-server": "1.25.0",
