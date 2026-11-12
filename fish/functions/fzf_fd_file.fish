@@ -28,7 +28,19 @@ function fzf_fd_file
     set -l prefix (string unescape -- $context[2])
     set -l base_dir (string unescape -- $context[3])
 
-    set -l selected (fd $fd_flags --type f . "$base_dir" | fzf --prompt="Select > ")
+    # カレントディレクトリ配下なら相対パス、そうでなければ絶対パスで表示する
+    set -l search_path $base_dir
+    if test "$base_dir" = "$PWD"
+        set search_path "."
+    else
+        set -l pwd_prefix (string replace -r '/$' '' -- "$PWD")/
+        set -l prefix_len (string length -- $pwd_prefix)
+        if test (string sub -l $prefix_len -- "$base_dir") = "$pwd_prefix"
+            set search_path (string sub -s (math $prefix_len + 1) -- "$base_dir")
+        end
+    end
+
+    set -l selected (fd $fd_flags --type f . "$search_path" | fzf --prompt="Select > ")
 
     if test -z "$selected"
         commandline --function repaint
