@@ -21,6 +21,8 @@ return {
 					ascii = "Mode: A",
 				},
 			},
+			cmdline = { enabled = true },
+			terminal = { enabled = true },
 		})
 		vim.api.nvim_create_autocmd("InsertLeave", {
 			pattern = "*",
