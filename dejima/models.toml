@@ -66,17 +66,6 @@ label = "Target language"
 path = ["chat_template_kwargs", "target_lang"]
 values = ["ja", "en"]
 
-[[model]]
-name = "plamo-3-translate-8b-MLX-4bit"
-friendly_name = "(omlx) Plamo 3 8B"
-endpoint = "http://localhost:51234/v1/chat/completions"
-api_key_env = "OMLX_API_KEY"
-
-[model.hyperparams.target_lang]
-label = "Target language"
-path = ["chat_template_kwargs", "target_lang"]
-values = ["ja", "en"]
-
 # --- Splash ---
 
 [[model]]

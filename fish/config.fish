@@ -9,6 +9,7 @@ podman completion fish | source
 # bind \cq 'fzf_change_env'
 bind \cr 'fzf_command_history'
 bind \cq 'fzf_select_file'
+bind \cx 'fzf_select_file_zoxide'
 bind \ct 'fzf_fd_file'
 
 # bun
