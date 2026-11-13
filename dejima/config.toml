@@ -1,4 +1,4 @@
-# default_model = "gemma-4-E4B-it-qat-q4_0-unquantized-oQ4e-text-fp16-0.7.1.dev1"
+default_model = "NVIDIA-Nemotron-3.5-Bolt-E4B-oQ4e-text-fp16-0.7.3.dev2"
 hook_command = 'printf "\a" > /dev/tty; osascript -e "display notification \"Response ready — check Dejima\" with title \"Dejima\" sound name \"Glass\""'
 stream_fps = 15
 scroll_step = 20
@@ -11,26 +11,275 @@ session_preview = ["space"]
 [agent]
 ask_hook_command = 'printf "\a" > /dev/tty; osascript -e "display notification \"Waiting for permission...\" with title \"Dejima\" sound name \"Glass\""'
 bash_timeout = 300
-bash = "ask"
+bash = "auto"
 read_file = "auto"
 write_file = "ask"
 edit_file = "ask"
 
 [agent.danger]
 commands = [
-  "rm",
-  "git reset",
-  "git push",
-  "git clean",
-  "git rm",
-  "sudo",
-  "dd",
-  "mkfs",
-  "format",
-  "sh",
-  "python",
-  "uv",
-  "perl",
-  "ruby",
+  # ══════════════════════════════════════════════════════════════
+  # シェル: ファイル削除・ディスク破壊
+  # ══════════════════════════════════════════════════════════════
+  "rm",            # rm / git rm / docker rm など。rm_rf や rmtree は別語
+  "rmdir",         # 空ディレクトリ削除。os.rmdir / fs.rmdir も捕捉
+  "unlink",        # ファイル/リンク削除。os.unlink / File.unlink も捕捉
+  "shred",         # 上書きしてから削除。復元不能
+  "truncate",      # ファイル切り詰め。SQL TRUNCATE / file.truncate も捕捉
+  "dd",            # 生ディスク/ファイルコピー。of= の誤指定で全損
+  "mkfs",          # ファイルシステム作成（フォーマット）。mkfs.ext4 も捕捉
+  "-delete",       # find -delete / rsync --delete / git push --delete
+  "wipefs",        # ファイルシステム署名の消去
+  "sgdisk",        # GPT パーティションテーブル操作。--zap-all で全消去
+  "fdisk",         # パーティションテーブル編集
+  "parted",        # パーティションの作成・削除・変更
+  "newfs",         # ファイルシステム作成。※newfs_apfs は別語で未捕捉
+  "erasedisk",     # diskutil eraseDisk。ディスク全体を消去
+  "erasevolume",   # diskutil eraseVolume。ボリューム消去
+  "partitiondisk", # diskutil partitionDisk。パーティション再構成
+  "deletevolume",  # diskutil apfs deleteVolume。APFS ボリューム削除
+  "crontab -r",    # crontab（定期実行ジョブ）を全削除
+
+  # ══════════════════════════════════════════════════════════════
+  # Python
+  # ══════════════════════════════════════════════════════════════
+  "rmtree",    # shutil.rmtree / Perl File::Path::rmtree
+  "os.remove", # os.remove / Lua os.remove / Go os.Remove
+  "os.unlink", # os.unlink。シンボリックリンク・ファイル削除
+
+  # ══════════════════════════════════════════════════════════════
+  # Ruby / FileUtils
+  # ══════════════════════════════════════════════════════════════
+  "rm_f",                # FileUtils.rm_f。ファイルを強制削除
+  "rm_r",                # FileUtils.rm_r。再帰削除
+  "rm_rf",               # FileUtils.rm_rf。再帰強制削除
+  "remove_entry",        # FileUtils.remove_entry。ディレクトリツリー削除
+  "remove_entry_secure", # FileUtils.remove_entry_secure。remove_entry では届かない
+  "remove_file",         # FileUtils.remove_file / Rust std::fs::remove_file
+  "remove_dir",          # FileUtils.remove_dir / Rust std::fs::remove_dir
+  "remove_dir_all",      # Rust std::fs::remove_dir_all。remove_dir では届かない
+  "file.delete",         # Ruby File.delete / C# File.Delete
+  "dir.delete",          # Ruby Dir.delete。subdir.delete には誤爆しない
+
+  # ══════════════════════════════════════════════════════════════
+  # Perl
+  # ══════════════════════════════════════════════════════════════
+  "remove_tree", # File::Path::remove_tree。rmtree は上の項目で捕捉
+
+  # ══════════════════════════════════════════════════════════════
+  # Node.js / JavaScript
+  # ══════════════════════════════════════════════════════════════
+  "rmsync",     # fs.rmSync。rm は Sync が続くと境界で切れる
+  "unlinksync", # fs.unlinkSync。unlink では届かない
+  "rmdirsync",  # fs.rmdirSync。rmdir では届かない
+  "rimraf",     # rimraf CLI/ライブラリ。再帰削除
+  "removesync", # fs-extra.removeSync
+  "emptydir",   # fs-extra.emptyDir。ディレクトリ内容を全削除
+
+  # ══════════════════════════════════════════════════════════════
+  # Go / Rust
+  # ══════════════════════════════════════════════════════════════
+  "removeall", # Go os.RemoveAll / JS removeAll。os.remove では届かない
+
+  # ══════════════════════════════════════════════════════════════
+  # JVM / .NET / PowerShell
+  # ══════════════════════════════════════════════════════════════
+  "files.delete",      # Java Files.delete(path)
+  "deleteifexists",    # Java Files.deleteIfExists。files.delete では届かない
+  "deletedirectory",   # Apache Commons FileUtils.deleteDirectory
+  "deletequietly",     # Apache Commons FileUtils.deleteQuietly
+  "deleterecursively", # Kotlin File.deleteRecursively
+  "directory.delete",  # .NET Directory.Delete
+  "remove-item",       # PowerShell Remove-Item
+
+  # ══════════════════════════════════════════════════════════════
+  # git（破壊的操作）
+  # ══════════════════════════════════════════════════════════════
+  "git reset",           # --hard で作業ツリーの変更を破棄
+  "git clean",           # 未追跡ファイル削除。-fdx で全削除
+  "git restore",         # 作業ツリーの変更を破棄
+  "git checkout --",     # 指定パスの変更を破棄
+  "git checkout .",      # カレント配下の変更を一括破棄
+  "git stash drop",      # stash を 1 件削除。復元困難
+  "git stash clear",     # 全 stash を削除
+  "git filter-branch",   # 履歴書き換え。全コミットのハッシュが変わる
+  "git filter-repo",     # 履歴書き換えツール
+  "git worktree remove", # worktree ディレクトリ削除。--force で未コミットも消える
+
+  # ══════════════════════════════════════════════════════════════
+  # 権限・システム
+  # ══════════════════════════════════════════════════════════════
+  "sudo",     # root 権限で任意コマンドを実行
+  "doas",     # OpenBSD 系の sudo 代替
+  "chmod -R", # 再帰的な権限変更。情報漏洩・ロックアウト
+  "chown -R", # 再帰的な所有者変更。システム破壊
+
+  # ══════════════════════════════════════════════════════════════
+  # データベース
+  # ══════════════════════════════════════════════════════════════
+  "drop table",    # SQL DROP TABLE。テーブルとデータを削除
+  "drop database", # SQL DROP DATABASE。DB 全体を削除
+  "delete from",   # SQL DELETE FROM。WHERE の有無を問わず確認
+  "drop_table",    # Rails / ActiveRecord の drop_table
+  "delete_all",    # Rails の一括削除
+  "destroy_all",   # Rails の一括削除
+  "flushall",      # Redis の全 DB 削除
+  "flushdb",       # Redis の現在 DB 全削除
+  "dropdatabase",  # MongoDB の dropDatabase
+
+  # ══════════════════════════════════════════════════════════════
+  # ネットワーク: HTTP / 生ソケット / リモート接続
+  # ══════════════════════════════════════════════════════════════
+  "curl",             # HTTP(S) GET/POST/アップロード。GET でも URL に秘密を載せられる
+  "wget",             # HTTP(S) ダウンロード/アップロード
+  "aria2c",           # 多機能ダウンローダー
+  "xh",               # Rust 製 HTTP クライアント
+  "openssl s_client", # 手動 TLS 接続
+  "nc",               # 任意 TCP/UDP 通信。※grep -nC などにも誤爆
+  "ncat",             # Nmap 版 netcat
+  "netcat",           # netcat
+  "socat",            # 任意のソケット中継
+  "telnet",           # 平文 TCP 接続
+  "ssh",              # SSH 経由の実行・トンネル。※ssh-keygen 等にも誤爆
+  "scp",              # SSH 経由のファイル転送
+  "sftp",             # SSH 経由のファイル転送
+  "ftp",              # FTP 転送
+  "lftp",             # 高機能 FTP クライアント
+  "tftp",             # TFTP 転送
+  "sshfs",            # SSH 経由のリモートマウント
+  "rsync",            # リモート同期。※ローカルコピーにも誤爆
+  "rclone",           # クラウドストレージ転送
+  "/dev/tcp/",        # bash 組み込みの生 TCP ソケット
+  "/dev/udp/",        # bash 組み込みの生 UDP ソケット
+  "dig",              # DNS クエリ。DNS トンネリングに使える
+  "nslookup",         # DNS クエリ。DNS トンネリングに使える
+
+  # ══════════════════════════════════════════════════════════════
+  # ネットワーク: リポジトリ・レジストリ・クラウドへの送信
+  # ══════════════════════════════════════════════════════════════
+  "git push",               # リポジトリをリモートへ送信。--force 系も含む
+  "docker push",            # イメージをレジストリへ送信
+  "podman push",            # Podman イメージを送信
+  "npm publish",            # npm パッケージ公開
+  "yarn publish",           # Yarn パッケージ公開
+  "pnpm publish",           # pnpm パッケージ公開
+  "cargo publish",          # crates.io へ公開
+  "gem push",               # RubyGems へ公開
+  "twine upload",           # PyPI へアップロード
+  "poetry publish",         # PyPI へ公開
+  "gh api",                 # GitHub API への送信
+  "gh gist",                # GitHub Gist 作成
+  "gh release",             # GitHub Release 作成/アップロード
+  "s3 cp",                  # aws s3 cp。S3 へアップロード
+  "s3 sync",                # aws s3 sync。S3 へ同期
+  "s3 mv",                  # aws s3 mv。S3 へ移動
+  "s3api put-object",       # aws s3api put-object。S3 へアップロード
+  "gsutil cp",              # GCS へアップロード
+  "gcloud storage cp",      # GCS へアップロード
+  "azcopy",                 # Azure Storage へ転送
+  "az storage blob upload", # Azure Blob へアップロード
+  "mc cp",                  # MinIO / S3 互換へアップロード
+
+  # ══════════════════════════════════════════════════════════════
+  # ネットワーク: 言語 API（CLI を経由しない送信）
+  # ══════════════════════════════════════════════════════════════
+  # Python
+  "requests.post",    # requests の POST
+  "requests.put",     # requests の PUT
+  "requests.patch",   # requests の PATCH
+  "requests.request", # requests の任意メソッド
+  "requests.get",     # GET でも URL にデータを載せられる
+  "urllib.request",   # 標準 urllib
+  "urlopen",          # urllib の urlopen
+  "httpx",            # httpx クライアント
+  "aiohttp",          # aiohttp クライアント
+  "socket.socket",    # 生ソケット
+  "smtplib",          # SMTP 送信
+  "ftplib",           # FTP 送信
+  "paramiko",         # SSH / SFTP
+  "boto3",            # AWS SDK
+  "pycurl",           # libcurl バインディング
+
+  # Ruby
+  "net::http",  # Net::HTTP の利用
+  "net/http",   # require "net/http"
+  "open-uri",   # require "open-uri"
+  "uri.open",   # URI.open による取得
+  "restclient", # RestClient
+  "httparty",   # HTTParty
+  "faraday",    # Faraday
+  "tcpsocket",  # TCPSocket による生通信
+  "net::ftp",   # Net::FTP
+  "net::ssh",   # Net::SSH
+
+  # Node.js / JavaScript
+  "fetch(",        # fetch()。※fetch (url) のように空白を入れると未捕捉
+  "axios",         # axios
+  "https.request", # https.request
+  "http.request",  # http.request
+  "net.connect",   # net.connect
+  "net.socket",    # net.Socket
+  "dgram",         # UDP ソケット
+  "node-fetch",    # node-fetch
+
+  # PHP
+  "curl_exec",            # curl_exec
+  "curl_init",            # curl_init
+  "file_get_contents",    # URL からの取得
+  "fsockopen",            # 生ソケット
+  "stream_socket_client", # ストリームソケット
+
+  # Perl
+  "lwp::useragent", # LWP::UserAgent
+  "http::tiny",     # HTTP::Tiny
+  "io::socket",     # IO::Socket
+
+  # Go
+  "http.post",       # http.Post
+  "http.get",        # http.Get
+  "http.newrequest", # http.NewRequest
+  "net.dial",        # net.Dial
+
+  # Java
+  "httpclient",         # Java HttpClient / .NET HttpClient
+  "httpurlconnection",  # HttpURLConnection
+  "url.openconnection", # URL.openConnection
+  "okhttp",             # OkHttp
+
+  # .NET / PowerShell
+  "webclient",         # .NET WebClient
+  "tcpclient",         # .NET TcpClient
+  "invoke-webrequest", # PowerShell Invoke-WebRequest
+  "invoke-restmethod", # PowerShell Invoke-RestMethod
 ]
-paths = [".env", ".git", "~", "../"]
+
+paths = [
+  # ══════════════════════════════════════════════════════════════
+  # 秘密情報・認証情報（bash のコマンド全文とファイルツールに適用）
+  # ══════════════════════════════════════════════════════════════
+  ".env",                # 環境変数・API キー。.envrc などにも一致（部分文字列）
+  ".netrc",              # HTTP/FTP の認証情報
+  ".npmrc",              # npm の認証トークン
+  ".pypirc",             # PyPI の認証トークン
+  ".git-credentials",    # git の保存済み認証情報
+  ".ssh/",               # SSH 秘密鍵・設定
+  ".aws/",               # AWS の認証情報・設定
+  ".azure/",             # Azure の認証情報
+  ".gnupg/",             # GPG の鍵
+  ".docker/config.json", # Docker レジストリの認証情報
+  ".kube/config",        # Kubernetes の認証情報
+  ".config/gcloud/",     # Google Cloud の認証情報
+
+  # ══════════════════════════════════════════════════════════════
+  # リポジトリ自身の保護
+  # ══════════════════════════════════════════════════════════════
+  ".git/hooks/", # フック書き換えによる任意コード実行を防ぐ
+  ".git/config", # remote URL・認証ヘルパー・hooksPath の改ざん防止
+
+  # ══════════════════════════════════════════════════════════════
+  # ワークスペース外へのアクセス
+  # ══════════════════════════════════════════════════════════════
+  "../",   # ワークスペース外へのパス。bash は sandbox されない
+  "/tmp/", # ワークスペース外の一時領域
+  "~/",    # ホームディレクトリ配下。※cd ~ 単体は一致しない
+]
