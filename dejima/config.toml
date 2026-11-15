@@ -9,12 +9,12 @@ preview_command = "leaf"
 session_preview = ["space"]
 
 [agent]
-ask_hook_command = 'printf "\a" > /dev/tty; osascript -e "display notification \"Waiting for permission...\" with title \"Dejima\" sound name \"Glass\""'
-bash_timeout = 300
+ask_hook_command = 'printf "\a" > /dev/tty; osascript -e "display notification \"Waiting for permission...\" with title \"Dejima\" sound name \"Funk\""'
+bash_timeout = 90
 bash = "auto"
 read_file = "auto"
 write_file = "ask"
-edit_file = "ask"
+edit_file = "auto"
 
 [agent.danger]
 commands = [

@@ -54,6 +54,7 @@ api_key_env = "OMLX_API_KEY"
 label = "Target language"
 path = ["chat_template_kwargs", "target_lang"]
 values = ["ja", "en"]
+default = "ja"
 
 [[model]]
 name = "plamo-3-translate-2b-MLX-4bit"
@@ -65,6 +66,7 @@ api_key_env = "OMLX_API_KEY"
 label = "Target language"
 path = ["chat_template_kwargs", "target_lang"]
 values = ["ja", "en"]
+default = "ja"
 
 # --- Splash ---
 
@@ -86,7 +88,41 @@ endpoint = "http://localhost:51235/v1/chat/completions"
 label = "Thinking"
 values = [false, true]
 
+[[model]]
+name = "peculiar-ragdoll--Cyber-Tiel-Coder-35B-A3B-MLX-oQ4e"
+friendly_name = "(omlx) Cyber-Tiel-Coder-35B-A3B-MLX-oQ4e"
+endpoint = "http://localhost:51234/v1/chat/completions"
+api_key_env = "OMLX_API_KEY"
+
+[model.hyperparams.reasoning_effort]
+label = "Thinking"
+values = [false, true]
+
 # --- Cloud Models ---
+
+[[model]]
+name = "deepseek-v4.1-flash"
+friendly_name = "(OpenCode Go) Deepseek-v4.1-flash"
+endpoint = "https://opencode.ai/inference/go/openai/v1/chat/completions"
+protocol = "opencode-go"
+api_key_env = "OPENCODE_GO_API_KEY"
+
+[model.hyperparams.reasoning_effort]
+label = "Reasoning effort"
+values = ["low", "high", "max"]
+default = "high"
+
+[[model]]
+name = "glm-5.3-flash"
+friendly_name = "(OpenCode Go) GLM-5.3-flash"
+endpoint = "https://opencode.ai/inference/go/openai/v1/chat/completions"
+protocol = "opencode-go"
+api_key_env = "OPENCODE_GO_API_KEY"
+
+[model.hyperparams.reasoning_effort]
+label = "Reasoning effort"
+values = ["low", "high", "max"]
+default = "high"
 
 [[model]]
 name = "gemma-4-31b-it"

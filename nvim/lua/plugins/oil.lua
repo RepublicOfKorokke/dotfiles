@@ -21,9 +21,9 @@ return {
 		},
 		columns = {
 			"icon",
-			-- "permissions",
-			-- "size",
-			-- "mtime",
+			"permissions",
+			"size",
+			"mtime",
 		},
 		use_default_keymaps = false,
 		view_options = {
