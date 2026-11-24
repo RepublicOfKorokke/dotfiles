@@ -71,26 +71,18 @@ default = "ja"
 # --- Splash ---
 
 [[model]]
-name = "mlx-community/Qwen3.6-35B-A3B-4bit"
-friendly_name = "(splash) Qwen3.6-35B-A3B-4bit"
-endpoint = "http://localhost:51235/v1/chat/completions"
+name = "mlx-community--Qwen3.8-27B-4bit"
+friendly_name = "(splash) Qwen3.8 27B"
+endpoint = "http://localhost:51234/v1/chat/completions"
+api_key_env = "OMLX_API_KEY"
 
 [model.hyperparams.reasoning_effort]
 label = "Thinking"
-values = [false, true]
-
-[[model]]
-name = "peculiar-ragdoll/Cyber-Tiel-Coder-35B-A3B-MLX-oQ4e"
-friendly_name = "(splash) Cyber-Tiel-Coder-35B-A3B-MLX-oQ4e"
-endpoint = "http://localhost:51235/v1/chat/completions"
-
-[model.hyperparams.reasoning_effort]
-label = "Thinking"
-values = [false, true]
+values = ["none", "minimal", "low", "medium", "high", "xhigh", "max"]
 
 [[model]]
 name = "peculiar-ragdoll--Cyber-Tiel-Coder-35B-A3B-MLX-oQ4e"
-friendly_name = "(omlx) Cyber-Tiel-Coder-35B-A3B-MLX-oQ4e"
+friendly_name = "(splash) Cyber Tiel Coder 35B A3B"
 endpoint = "http://localhost:51234/v1/chat/completions"
 api_key_env = "OMLX_API_KEY"
 

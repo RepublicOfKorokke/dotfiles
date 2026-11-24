@@ -26,7 +26,7 @@ abbr -a z " z"
 abbr -a zi " zi"
 
 function __dl_abbr
-    set -l subpath (pwd)
+    set -l subpath (pwd | string trim -l -c / | string escape)
     echo "dejima --sessions ~/.config/dejima/sessions/locals/$subpath"
 end
 
