@@ -9,3 +9,14 @@ git:
 gui:
   mouseEvents: false
   nerdFontsVersion: "3"
+customCommands:
+  - key: 'G' # Or any unused keybinding you prefer
+    context: 'files'
+    description: 'Open selected file in leaf'
+    command: 'leaf {{.SelectedFile.Name}}'
+    output: terminal
+  - key: 'G'
+    context: 'commitFiles'
+    description: 'Open selected commit file in Glow'
+    command: 'leaf {{.SelectedCommitFile.Name}}'
+    output: terminal
